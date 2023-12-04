@@ -3,7 +3,6 @@ class QR {
   int idEffit;
   int etatEffet;
   String ref;
-  int nbProd;
   String refAssociers;
   DateTime creationTime;
   DateTime lastModified;
@@ -13,7 +12,6 @@ class QR {
     this.idEffit = 0,
     this.ref = '',
     this.etatEffet = 0,
-    this.nbProd = 0,
     this.refAssociers = '',
     DateTime? creationTime,
     DateTime? lastModified,

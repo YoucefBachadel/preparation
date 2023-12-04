@@ -23,9 +23,9 @@ class _PreparateurSelectorState extends State<PreparateurSelector> {
         'inabex':
             'UPDATE Effet SET Effet.CleEtatEffet = 2 , Effet.CleCommercial = ${item.id} WHERE Effet.CleEffet = ${scannedQr.idEffit};',
         'sql1': 'INSERT INTO encours VALUES (${scannedQr.idEffit});',
-        'sql2': '''INSERT INTO transaction(idBc,refBc,etat,preparateur,nbProd,creationBc,aPreparer,enCours) VALUES
-                               (${scannedQr.idEffit},'${scannedQr.ref}',${scannedQr.etatEffet},${item.id},${scannedQr.nbProd},'${scannedQr.creationTime}','${scannedQr.lastModified}','${DateTime.now()}') ON DUPLICATE KEY UPDATE
-                               refBc = '${scannedQr.ref}' , etat = ${scannedQr.etatEffet} , preparateur = ${item.id} , nbProd = ${scannedQr.nbProd} , creationBc = '${scannedQr.creationTime}' , aPreparer = '${scannedQr.lastModified}' , enCours = '${DateTime.now()}';'''
+        'sql2': '''INSERT INTO transaction(idBc,refBc,etat,preparateur,creationBc,aPreparer,enCours) VALUES
+                               (${scannedQr.idEffit},'${scannedQr.ref}',${scannedQr.etatEffet},${item.id},'${scannedQr.creationTime}','${scannedQr.lastModified}','${DateTime.now()}') ON DUPLICATE KEY UPDATE
+                               refBc = '${scannedQr.ref}' , etat = ${scannedQr.etatEffet} , preparateur = ${item.id} , creationBc = '${scannedQr.creationTime}' , aPreparer = '${scannedQr.lastModified}' , enCours = '${DateTime.now()}';'''
       });
 
       await dialog(context, '${scannedQr.ref} est en cours');

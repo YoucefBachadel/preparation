@@ -115,7 +115,6 @@ class _ScannerState extends State<Scanner> {
           lastModified: DateFormat('dd-MM-yyyy HH:mm:ss').parse(result.split('\\')[4]),
           refAssociers: result.split('\\')[0] == 'bl' ? result.split('\\')[5] : '',
           etatEffet: result.split('\\')[0] == 'bc' ? int.parse(result.split('\\')[5]) : 0,
-          nbProd: result.split('\\')[0] == 'bc' ? int.parse(result.split('\\')[6]) : 0,
         );
 
         var data = await sqlQuery(checkEnCour, {
