@@ -67,12 +67,26 @@ class _ScannerState extends State<Scanner> {
     if (res.statusCode == 200) {
       var data = json.decode(res.body);
       for (var ele in data['preparateurs']) {
-        preparateurs.add(Preparateur(int.parse(ele.toString().split('/')[0]), ele.split('/')[1]));
+        preparateurs.add(Preparateur(
+          int.parse(ele.toString().split('/')[0]),
+          ele.split('/')[1],
+          getColor(int.parse(ele.split('/')[2])),
+        ));
       }
       for (var ele in data['pointeurs']) {
-        pointeurs
-            .add(Pointeur(int.parse(ele.toString().split('/')[0]), ele.split('/')[1], int.parse(ele.split('/')[2])));
+        pointeurs.add(Pointeur(
+          int.parse(ele.toString().split('/')[0]),
+          ele.split('/')[1],
+          int.parse(ele.split('/')[2]),
+          getColor(int.parse(ele.split('/')[3])),
+        ));
       }
+
+      preparateurs.sort((a, b) => a.name.compareTo(b.name));
+      pointeurs.sort((a, b) => a.name.compareTo(b.name));
+
+      enCoursColor = getColor(data['enCoursColor']);
+      preteColor = getColor(data['preteColor']);
 
       dataLoaded = true;
 
@@ -93,13 +107,13 @@ class _ScannerState extends State<Scanner> {
       'sql2': '''UPDATE transaction SET pret = '${DateTime.now()}' WHERE idBc = ${scannedQr.idEffit};''',
     });
 
-    await dialog(context, '${scannedQr.ref} est prête');
+    await dialog(context, '${scannedQr.ref} est prête', backgroundColor: preteColor);
   }
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
-      controller.pauseCamera();
+      await controller.pauseCamera();
       alertPlayer();
 
       String? result = scanData.code.toString();
